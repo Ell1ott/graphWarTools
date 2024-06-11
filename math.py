@@ -11,10 +11,16 @@ elif os.name == "posix":
 else:
     print("unknown os, terminating")
 
+from tkinter import *
+
+title = "GraphwarTool"
+
 if osType == 0:
-    import win32gui
+    print("1")
+    #import win32gui
 elif osType == 1:
-    import xlib
+    print("2")
+    #import xlib
 
 
 wx = 0
