@@ -1,5 +1,13 @@
 from pynput import mouse, keyboard
 import win32gui
+import os
+
+osType = -1
+if(os.name == "nt"):
+    osType = 0
+else if (os.name == "posix"):
+    osType = 1
+
 
 wx = 0
 wy = 0
@@ -19,7 +27,7 @@ def callback(hwnd, extra):
 def main():
     win32gui.EnumWindows(callback, None)
 
-if __name__ == '__main__':
+if __name__ == '__main__':<
     main()
 
 currentDir = 1  
