@@ -1,12 +1,20 @@
 from pynput import mouse, keyboard
-import win32gui
 import os
 
 osType = -1
 if(os.name == "nt"):
     osType = 0
-else if (os.name == "posix"):
+    print("windows detected")
+elif (os.name == "posix"):
     osType = 1
+    print("linux detected")
+else:
+    print("unknown os, terminating")
+
+if(osType == 0):
+    import win32gui
+else if(osType == 1):
+    import xlib
 
 
 wx = 0
