@@ -35,7 +35,7 @@ def callback(hwnd, extra):
 def main():
     win32gui.EnumWindows(callback, None)
 
-if __name__ == '__main__':<
+if __name__ == '__main__':
     main()
 
 currentDir = 1  
