@@ -121,11 +121,9 @@ mouse_listener = mouse.Listener(on_click=on_click)
 keyboard_listener = keyboard.on_press(on_press)
 
 mouse_listener.start()
-keyboard_listener.start()
 
     
 mouse_listener.join()
-keyboard_listener.join()
 # formel = f'(x+abs(x))({currentDir})'
 
 # formel += "+" + newDir(1, 0)
