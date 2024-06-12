@@ -1,4 +1,5 @@
-from pynput import mouse, keyboard
+from pynput import mouse
+import keyboard
 import os
 
 osType = -1
@@ -11,7 +12,8 @@ elif os.name == "posix":
 else:
     print("unknown os, terminating")
 
-from tkinter import *
+import tkinter as tk
+import pygetwindow as gw
 
 title = "GraphwarTool"
 
@@ -25,21 +27,29 @@ elif osType == 1:
 
 wx = 0
 wy = 0
-def callback(hwnd, extra):
-    if(win32gui.GetWindowText(hwnd) == 'Graphwar'):
-        global wx, wy
+def callback():
+    windows = gw.getWindowsWithTitle('Graphwar')
+    if not windows:
+        print("no window called graphwar found")
+    else:
+        for index, window in enumerate(windows):
+            title = window.title
 
-        rect = win32gui.GetWindowRect(hwnd)
-        wx = rect[0]
-        wy = rect[1]
-        w = rect[2] - wx
-        h = rect[3] - wy
-        print("Window %s:" % win32gui.GetWindowText(hwnd))
-        print("\tLocation: (%d, %d)" % (wx, wy))
-        print("\t    Size: (%d, %d)" % (w, h))
+            window = gw.getWindowsWithTitle(title)[index]
+
+            # Get the window rectangle
+            rect = window.left, window.top, window.right, window.bottom
+
+            wx = rect[0]
+            wy = rect[1]
+            w = rect[2] - wx
+            h = rect[3] - wy
+            print(f"Window {title}:\n")
+            print(f"\tLocation: ({wx}, {wy})\n")
+            print(f"\t    Size: ({w}, {h})\n")
 
 def main():
-    win32gui.EnumWindows(callback, None)
+    callback()
 
 if __name__ == '__main__':
     main()
@@ -98,16 +108,17 @@ def on_click(x, y, button, pressed):
 
     
 import pyperclip
+
 def on_press(key):
     global formel, clickCount
-    if key == keyboard.Key.enter:
+    if key.name == "enter":
         print(formel)
         pyperclip.copy(formel)
         formel = ""
         clickCount = 0
 
 mouse_listener = mouse.Listener(on_click=on_click)
-keyboard_listener = keyboard.Listener(on_press=on_press)
+keyboard_listener = keyboard.on_press(on_press)
 
 mouse_listener.start()
 keyboard_listener.start()
